@@ -1,59 +1,51 @@
-// Shared functions for all pages
-document.addEventListener('DOMContentLoaded', function() {
-    // Initialize tooltips
-    const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-    tooltipTriggerList.map(function (tooltipTriggerEl) {
-        return new bootstrap.Tooltip(tooltipTriggerEl);
+let menuIcon = document.querySelector('#menu-icon');
+let navbar = document.querySelector('.navbar');
+
+menuIcon.onclick = () => {
+    menuIcon.classList.toggle('fa-xmark');
+    navbar.classList.toggle('active')
+}
+let sections = document.querySelectorAll('section');
+let navLinks = document.querySelectorAll('header nav a');
+
+window.onscroll = () => {
+    sections.forEach(sec => {
+        let top = window.scrollY;
+        let offset = sec.offsetTop - 150;
+        let height = sec.offsetHeight;
+        let id = sec.getAttribute('id');
+
+        if( top >= offset && top < offset + height) {
+            navLinks.forEach.apply(links => {
+                links.classList.remove('active');
+                document.querySelector('header nav a');
+            });
+        };
     });
 
-    // Current year for footer
-    document.getElementById('current-year').textContent = new Date().getFullYear();
+    let header = document.querySelectorAll('header');
+    header.classList.toggle('sticky', window-scrollY > 100);
+
+    menuIcon.classList.remove('fa-xmark');
+    navbar.classList.remove('active');
+}
+//  scroll reveal 
+ScrollReveal({
+    distance: '80px',
+    duration: 2000,
+    delay: 200,
 });
 
-// Form validation function
-function validateForm(formId) {
-    const form = document.getElementById(formId);
-    const inputs = form.querySelectorAll('input[required]');
-    let isValid = true;
+ScrollReveal().reveal('.home-content, heading', { origin: 'top' });
+ScrollReveal().reveal('.home-img, .services-container, .portofolio-box, .contact form', { origin: 'buttom' });
+ScrollReveal().reveal('.home-contact h1, .about-img', { origin: 'left' });
+ScrollReveal().reveal('.home-contact h2, .about-content', { origin: 'right'});
 
-    inputs.forEach(input => {
-        if (!input.value.trim()) {
-            input.classList.add('border-red-500');
-            isValid = false;
-        } else {
-            input.classList.remove('border-red-500');
-        }
-    });
-
-    return isValid;
-}
-
-// Toast notification function
-function showToast(message, type = 'success') {
-    const toastContainer = document.getElementById('toast-container') || createToastContainer();
-    const toast = document.createElement('div');
-    
-    const colors = {
-        success: 'bg-green-500',
-        error: 'bg-red-500',
-        warning: 'bg-yellow-500',
-        info: 'bg-blue-500'
-    };
-
-    toast.className = `text-white px-4 py-2 rounded-md shadow-lg mb-2 ${colors[type]} animate-fade-in`;
-    toast.textContent = message;
-    toastContainer.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.add('animate-fade-out');
-        setTimeout(() => toast.remove(), 300);
-    }, 3000);
-}
-
-function createToastContainer() {
-    const container = document.createElement('div');
-    container.id = 'toast-container';
-    container.className = 'fixed bottom-4 right-4 z-50';
-    document.body.appendChild(container);
-    return container;
-}
+// typed js 
+const typed = new Typed('.multiple-text', {
+    strings: ['Beginner Front-End', 'Web Design', 'Light Vechile Engineering'],
+    typeSpeed: 70,
+    backSpeed: 70,
+    backDelay: 1000,
+    loop: true,
+});
