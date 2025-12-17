@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surprise Love Card</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #f8f8f8;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.5s;
+        }
+        .envelope::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 0;
+            width: 300px;
+            height: 50px;
+            background: #f8f8f8;
+            clip-path: polygon(0 0, 50% 100%, 100% 0);
+            transition: transform 0.5s;
+        }
+        .envelope.open::before {
+            transform: rotateX(180deg) translateY(50px);
+        }
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.5s;
+            z-index: -1;
+        }
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            z-index: 1;
+        }
+        .quote {
+            font-size: 1.5em;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background 0.3s;
+        }
+        .button:hover {
+            background: #ff5252;
+        }
+        .love-slide {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+            color: white;
+        }
+        .love-slide h1 {
+            font-size: 3em;
+            margin: 0;
+        }
+        .gift-message {
+            font-size: 1.2em;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff6b6b;
+            animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="envelope" id="envelope" onclick="openEnvelope()">
+        <div class="hearts">
+            <!-- Hearts for decoration -->
+            <div class="heart" style="left: 10%; animation-delay: 0s;">❤️</div>
+            <div class="heart" style="left: 30%; animation-delay: 1s;">💖</div>
+            <div class="heart" style="left: 50%; animation-delay: 2s;">💕</div>
+            <div class="heart" style="left: 70%; animation-delay: 1.5s;">💗</div>
+            <div class="heart" style="left: 90%; animation-delay: 0.5s;">💓</div>
+        </div>
+    </div>
+
+    <div class="slide" id="slide1">
+        <div class="quote">"Cinta adalah ketika kebahagiaan orang lain lebih penting daripada kebahagiaanmu sendiri." - H. Jackson Brown Jr.</div>
+        <button class="button" onclick="nextSlide()">Klik untuk Melanjutkan</button>
+    </div>
+
+    <div class="slide love-slide" id="slide2">
+        <h1>LOVE</h1>
+        <div class="gift-message">Kamu dapat kado spesial! Semoga suka ya 💕</div>
+        <p>Cinta sejati adalah tentang pengorbanan dan kebahagiaan bersama. Terima kasih telah menjadi bagian dari hidupku!</p>
+    </div>
+
+    <script>
+        function openEnvelope() {
+            const envelope = document.getElementById('envelope');
+            envelope.classList.add('open');
+            setTimeout(() => {
+                envelope.style.display = 'none';
+                document.getElementById('slide1').classList.add('active');
+            }, 500); // Delay to show animation
+        }
+
+        function nextSlide() {
+            document.getElementById('slide1').classList.remove('active');
+            document.getElementById('slide2').classList.add('active');
+        }
+    </script>
+</body>
+</html>
